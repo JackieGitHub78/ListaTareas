@@ -1,0 +1,6 @@
+{
+  "name": "tareas",
+  "short_name": "tareas",
+  "start_url": "/",
+  "display": "standalone"
+}

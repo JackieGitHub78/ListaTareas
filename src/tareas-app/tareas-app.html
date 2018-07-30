@@ -1,0 +1,175 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/paper-input/paper-input.html">
+<link rel="import"  href="../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="./card-tarea.html">
+
+<dom-module id="tareas-app">
+  <template>
+    <style>
+      :host {
+        display: block;
+        margin: 0;
+        padding: 0;
+      }
+      header{
+        width: 100%;
+        overflow: hidden;
+        background: #053C58;
+        margin-bottom: 20px;
+      }
+      .wrapper{
+        width: 90%;
+        max-width: 1000px;
+        margin: auto;
+        overflow: hidden;
+      }
+      header .logo{
+        color:#f2f2f2;
+        font-size: 50px;
+        line-height: 100px;
+        text-align: center;
+        font-family: "Homer Simpson", cursive;
+      }
+
+      .aviso{
+        color:#053C58;
+        text-align: center;
+        background-color:#D9DAD8;
+        font-family: "Homer Simpson", cursive;
+        border-radius: 10px;
+        
+      }
+
+      .agregar{
+        display: inline-block;
+        color: #fff;
+        text-decoration:none;
+        line-height: 50px;
+        font-family: "Homer Simpson", cursive;
+        background-color:#0872A7;
+        width: 100%;
+        font-size: 20px;
+        border-radius: 10px;
+      }
+
+      button:hover{
+        background: #fff;
+        color:#0872A7;
+        box-shadow: inset #fff 3px #0872A7;
+      }
+
+
+  /*    button{
+        border: none;
+		background: #3a7999;
+		color: #f2f2f2;
+		padding: 10px;
+		font-size: 25px;
+		border-radius: 5px;
+		position: relative;
+		box-sizing: border-box;
+		transition: all 500ms ease;
+    width: 100%;
+    line-height: 50px;
+    font-family: "Homer Simpson", cursive;
+    
+      }
+
+
+  button{
+        transform-style: preserve-3d;
+      }
+
+      button:after{
+        top:-100%;
+        left: 0px;
+        width: 100%;
+        position: absolute;
+        background: #3a9999;
+        border-radius: 5px;
+        content: '¡Infinito!';
+        transform-origin: left bottom;
+        transform: rotateX(90deg);
+        box-sizing: border-box;
+        line-height: 50px;
+        font-family: "Homer Simpson", cursive;
+      }
+      button:hover{
+        transform-origin: center bottom;
+        transform: rotateX(-90deg) translateY(100%);
+      }*/
+
+    </style>
+    <header>
+      <div class="wrapper">
+        <div class="logo">Lista de tareas</div>
+      </div>
+    </header>
+    <paper-input
+    char-counter
+    name="todo"
+    value="{{todo}}"
+    label="Ingresa un tarea con longitud maxima de 50 caracteres"
+    maxlength="50"
+    required>
+    </paper-input>
+    <br>
+    <button type="button" class="agregar" on-click="addTodo" >Agregar tarea</button>
+    <div>
+    </div>
+
+      <div id="todos">
+                <p style="display: block">
+                    <template is="dom-repeat" items="{{todos}}" as="todo"  rendered-item-count="{{renderedCount}}">
+                      <card-tarea tarea = "{{todo}}" num="[[index]]" on-eliminado="eliminarOpcion"></card-tarea>
+                    </template>
+                </p>
+                <template is="dom-if" if="{{!renderedCount}}">
+                  <div class="aviso">No existen tareas en la lista!</div>
+                </template>
+            </div>
+  </template>
+
+  <script>
+    /**
+     * @customElement
+     * @polymer
+     */
+    class TareasApp extends Polymer.Element {
+      static get is() { return 'tareas-app'; }
+      static get properties() {
+        return {
+          prop1: {
+            type: String,
+            value: 'tareas-app'
+          },todo:{
+              type: String
+            },
+                    todos: {
+                        type: Array,
+                        value: [],
+                        notify: true
+                    }
+        };
+      }
+
+      addTodo(e) 
+            {
+              if(typeof this.todo === 'undefined' || this.todo === "" ){
+                  alert("Es obligatorio ingresar una tarea.");
+                }else{
+                 this.push('todos', this.todo);
+                 this.set('todo', ''); 
+                }
+            }
+      destroy(e) {
+                console.log(e.model.index);
+            }
+
+      eliminarOpcion(e){
+        this.splice('todos', e.detail.id, 1);
+      }
+    }
+    window.customElements.define(TareasApp.is, TareasApp);
+  </script>
+</dom-module>

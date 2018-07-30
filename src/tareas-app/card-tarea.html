@@ -1,0 +1,71 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+
+<dom-module id="card-tarea">
+    <template>
+        <style>
+            :host {
+                display: block
+            }
+            .etiqueta{
+                color:#053C58;
+                background-color:#D9DAD8;
+                font-family: "Homer Simpson", cursive;
+                border-radius: 10px;
+                font-size: 20px;
+                line-height: 50px;
+                padding: 0;
+                margin:0;
+                width: 80%;
+                float:left;
+            }
+            .margen{
+                 margin: 4px 4px 4px 4px;
+            }
+            .destroy{
+                color:white;
+                text-align: center;
+                background-color:#850B0B;
+                font-family: "Homer Simpson", cursive;
+                border-radius: 10px;
+                font-size: 20px;
+                line-height: 50px;
+                padding: 0;
+                margin:0;
+                width: 19%;
+                float:left;
+            }
+        </style>
+        <p class="etiqueta margen"><span style="font-weight:bold">Tarea :</span> {{tarea}}</p>
+        <button class="destroy margen" on-click="eliminar">Eliminar</button>
+    </template>
+
+
+    <script>
+
+        class CardTarea extends Polymer.Element {
+
+            static get is() {
+                return 'card-tarea';
+            }
+
+
+            static get properties() {
+                return {
+                    
+                };
+            }
+
+
+            eliminar(){
+                this.dispatchEvent(new CustomEvent('eliminado', {
+                    detail: {
+                    id: this.num
+                    }
+                }));
+            }
+
+        }
+
+        window.customElements.define(CardTarea.is, CardTarea);
+    </script>
+</dom-module>
